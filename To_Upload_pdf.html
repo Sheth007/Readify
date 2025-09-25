@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Try 2</title>
+</head>
+<body>
+    <input type="file" name="" id="pdfupload">
+    <button type="submit" id="submit">submit the pdf</button>
+    <iframe frameborder="0" width="100%" height="600px" id="iframes"></iframe>
+
+    <script>
+        let fileInput = document.getElementById('pdfupload');
+
+        let iframe = document.getElementById('iframes');
+
+        document.getElementById('submit').addEventListener('click', function(){
+            let file = fileInput.files[0];
+            let object = URL.createObjectURL(file);
+            iframe.src = object;
+        })
+    </script>
+</body>
+</html>

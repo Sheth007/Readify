@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h3 id="set_file_name"></h3>
+    <p id="replace_me"></p>
+    <script>
+        a = localStorage.getItem('file_content');
+        document.getElementById('replace_me').innerText = a;
+        b = localStorage.getItem('file_name');
+        document.getElementById('set_file_name').textContent = `your file ${b} contnet is :`;
+    </script>
+</body>
+</html>

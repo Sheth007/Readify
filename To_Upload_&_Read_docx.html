@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>To Read Word File</title>
+</head>
+<body>
+    <input type="file" id="upload" />
+    <div id="output"></div>
+
+        <script src="https://unpkg.com/mammoth/mammoth.browser.min.js"></script>
+        <script>
+          document.getElementById('upload').addEventListener('change', function(event) {
+            var reader = new FileReader();
+        
+            reader.onload = function(event) {
+              var arrayBuffer = reader.result;
+              mammoth.convertToHtml({arrayBuffer: arrayBuffer})
+                .then(function(result) {
+                  document.getElementById('output').innerHTML = result.value;
+                })
+                .catch(function(err) {
+                  console.log(err);
+                });
+            };
+        
+            reader.readAsArrayBuffer(this.files[0]);
+          });
+        </script>
+    </div>
+</body>
+</html>

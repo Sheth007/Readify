@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <input type="file" name="" id="file_input"><br><br>
+    <button type="submit" id="redirect_me">CLick me</button>
+    <script>
+        if(!document.getElementById('file_input').value != null){
+            document.getElementById('file_input').value = null;
+            localStorage.clear();
+        }
+        document.getElementById('file_input').addEventListener('change',(event)=>{
+            const file = event.target.files[0]; 
+            const reader = new FileReader();
+
+            reader.onload = function() {
+                const content = reader.result;
+                localStorage.setItem("file_name", file.name);   
+                localStorage.setItem("file_content", content);
+            }
+
+            reader.readAsText(file, 'utf-8');
+        });
+
+        document.getElementById('redirect_me').addEventListener('click', function(){
+            window.location.href = "To_Read_txt.html";
+        })
+    </script>
+</body>
+</html>
