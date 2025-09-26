@@ -3,23 +3,71 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Try 2</title>
+    <title>PDF Viewer</title>
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            font-family: sans-serif;
+            gap: 20px;
+            margin-top: 30px;
+            background-color: rgb(60, 60, 60);
+        }
+        .controls {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 12px;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .submit-btn {
+            width: 120px;
+            height: 40px;
+            background-color: #4267B2;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: bold;
+        }
+        .submit-btn:hover {
+            background-color: #365899;
+        }
+        #pdf-viewer {
+            border: 1px solid whitesmoke;
+            width: 99%; 
+            max-width: 1200px;
+            height: 85vh;
+        }
+    </style>
 </head>
 <body>
-    <input type="file" name="" id="pdfupload">
-    <button type="submit" id="submit">submit the pdf</button>
-    <iframe frameborder="0" width="100%" height="600px" id="iframes"></iframe>
+
+    <div class="controls">
+        <input type="file" id="pdf-upload" accept=".pdf">
+        <button type="button" class="submit-btn" id="submit-button">View PDF</button>
+    </div>
+
+    <iframe id="pdf-viewer" frameborder="0"></iframe>
 
     <script>
-        let fileInput = document.getElementById('pdfupload');
+        const fileInput = document.getElementById('pdf-upload');
+        const submitButton = document.getElementById('submit-button');
+        const iframe = document.getElementById('pdf-viewer');
 
-        let iframe = document.getElementById('iframes');
-
-        document.getElementById('submit').addEventListener('click', function(){
-            let file = fileInput.files[0];
-            let object = URL.createObjectURL(file);
-            iframe.src = object;
-        })
+        submitButton.addEventListener('click', function() {
+            const file = fileInput.files[0];
+            if (file) {
+                const objectURL = URL.createObjectURL(file);
+                iframe.src = objectURL;
+            } else {
+                alert("Please choose a PDF file first.");
+            }
+        });
     </script>
 </body>
 </html>

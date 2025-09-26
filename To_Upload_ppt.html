@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Read PPTX File</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <h1>Read PPTX File</h1>
+
+    <input type="file" id="pptFile" accept=".pptx" />
+    <div id="output" style="margin-top: 20px; max-width: 800px; color: white;"></div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+    <script>
+    document.getElementById("pptFile").addEventListener("change", function (event) {
+    const file = event.target.files[0];
+    if (!file || !file.name.endsWith(".pptx")) {
+        alert("Please upload a .pptx file.");
+        return;
+    }
+
+    const reader = new FileReader();
+
+    reader.onload = function (e) {
+        JSZip.loadAsync(e.target.result).then(function (zip) {
+            const slideRegex = /^ppt\/slides\/slide\d+\.xml$/;
+            const slideFiles = Object.keys(zip.files).filter(file => slideRegex.test(file));
+            if (slideFiles.length === 0) {
+                document.getElementById("output").innerText = "No slides found in this file.";
+                return;
+            }
+
+            let outputDiv = document.getElementById("output");
+            outputDiv.innerHTML = "<h2>Extracted Text:</h2>";
+
+            Promise.all(
+                slideFiles.map(file =>
+                    zip.files[file].async("string").then(content => {
+                        const matches = [...content.matchAll(/<a:t>(.*?)<\/a:t>/g)];
+                        const text = matches.map(m => m[1]).join(" ");
+                        return text;
+                    })
+                )
+            ).then(slideTexts => {
+                slideTexts.forEach((text, i) => {
+                    const slide = document.createElement("div");
+                    slide.innerHTML = `<strong>Slide ${i + 1}:</strong><p>${text}</p>`;
+                    slide.style.marginBottom = "20px";
+                    outputDiv.appendChild(slide);
+                });
+            });
+        });
+    };
+
+    reader.readAsArrayBuffer(file);
+});
+    </script>
+</body>
+</html>
