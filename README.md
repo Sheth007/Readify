@@ -60,8 +60,8 @@ We welcome contributions! Here's how you can help:
 
 ## 👥 Contributors
 
-- **[Uday Sheth]** - Project Creator & Main Developer
-- **[VishalBunny07]** - Contributing Developer
+- **[Uday Sheth](https://github.com/Sheth007)** - Project Creator & Main Developer
+- **[VishalBunny07](https://github.com/VishalBunny07)** - Contributing Developer
 
 ## 📄 License
 
